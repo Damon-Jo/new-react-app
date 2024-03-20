@@ -1,9 +1,29 @@
+import { useState } from 'react';
+
 const Modal = () => {
 
-  const mode = "edit";
-  const handleChange = () => {
-    console.log('changing')
-  };
+  const mode = "create"
+  const editMode = mode === 'edit' ? true : false
+
+  const [data, setData] =  useState({
+    user_email : "",
+    title: "",
+    progress: "",
+    date: editMode ? "" : new Date()
+  })
+
+
+
+
+  const handleChange = (e) => {
+    console.log('changing', e)
+    const { name, value } = e.target;
+
+    setData(data => ({
+      ...data,
+      [name]: value
+    }))
+  }
 
   return (
     <div className="overlay">
@@ -19,7 +39,7 @@ const Modal = () => {
             maxLength={30}
             placeholder=" Your task goes here"
             name="title"
-            value={""}
+            value={data.title}
             onChange={handleChange}
           />
           <br />
@@ -31,8 +51,8 @@ const Modal = () => {
             min='0'
             max="100"
             name="progress"
-            value={""}
-            onAbort={handleChange}
+            value={data.progress}
+            onChange={handleChange}
 
           />
           <input className={mode} type="submit" />
