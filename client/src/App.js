@@ -5,7 +5,17 @@ import ListHeader from './components/ListHeader';
 const App = () => {
   const userEmail = 'ania@test.com'
 
-  const [tasks, setTasks] = useState(null)
+  const [tasks, setTasks] = useState(
+    [
+      {
+        "id": 1,
+        "user_email": "",
+        "title": "Buy a ticket",
+        "progress": 80,
+        "date": "2022-12-01"
+      }
+    ]
+  )
 
 const getData = async () =>{
 
