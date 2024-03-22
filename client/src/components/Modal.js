@@ -10,7 +10,7 @@ const Modal = ({mode, setShowModal, getData, task}) => {
     user_email : editMode ? task.user_email : 'ania@test.com',
     title: editMode ? task.title : null,
     progress: editMode ? task.progress : 50,
-    date: editMode ? "" : new Date()
+    date: editMode ? task.date : new Date()
   })
 
   const postData = async (e) => {
@@ -37,6 +37,30 @@ const Modal = ({mode, setShowModal, getData, task}) => {
     }
   }
 
+  const editData = async (e) => {
+    e.preventDefault()
+    try {
+      const response = await fetch(`http://localhost:8000/todos/${task.id}`, 
+        {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        }
+      )
+      if(response.status === 200){
+        console.log('WORKED')
+        setShowModal(false)
+        getData()
+      }
+    } catch(err){
+      console.error(err)
+    }
+
+    }
+  
+  
 
 
 
@@ -82,7 +106,7 @@ const Modal = ({mode, setShowModal, getData, task}) => {
             onChange={handleChange}   
 
           />
-          <input className={mode} type="submit" onClick={editMode ? '': postData}/>
+          <input className={mode} type="submit" onClick={editMode ? editData: postData}/>
         </form>
       </div>
 
