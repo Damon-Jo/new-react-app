@@ -17,7 +17,7 @@ const Modal = ({mode, setShowModal, getData, task}) => {
     e.preventDefault()
     
     try {
-      const response = await fetch('http://localhost:8000/todos', {
+      const response = await fetch(`${process.env.REACT_APP_SERVERURL}/todos`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -40,7 +40,7 @@ const Modal = ({mode, setShowModal, getData, task}) => {
   const editData = async (e) => {
     e.preventDefault()
     try {
-      const response = await fetch(`http://localhost:8000/todos/${task.id}`, 
+      const response = await fetch(`${process.env.REACT_APP_SERVERURL}/todos/${task.id}`, 
         {
           method: 'PUT',
           headers: {
