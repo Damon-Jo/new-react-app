@@ -23,11 +23,11 @@ const Auth = () => {
         <div className="auth-options">
           <button 
           onClick={()=> viewLogin(false)}
-          style={{backgroundColor: isLogIn ? 'rgb(255,255,255)' : 'rgb(188,188, 188)'}}
+          style={{backgroundColor: !isLogIn ? 'rgb(255,255,255)' : 'rgb(188,188,188'}}
           >Sign up</button>
           <button 
           onClick={()=> viewLogin(true)}
-
+          style={{backgroundColor: isLogIn ? 'rgb(255,255,255)' : 'rgb(188,188,188'}}
           >Login</button>
         </div>
       </div>
