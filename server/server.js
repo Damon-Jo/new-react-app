@@ -66,13 +66,13 @@ app.delete('/todos/:id', async (req, res) => {
 app.post('/signup', async (req, res) => {
     const { email, password } = req.body
     const salt = bcrypt.genSaltSync(10)
-    const hashedPassword = bcrypt.hash(password, salt)
+    const hashedPassword = bcrypt.hashSync(password, salt)
 
     try {
-        const signUp = await pool.query('INSERT INTO users (email, hased_password) VALUES ($1, $2)', 
+        const signUp = await pool.query(`INSERT INTO users (email, hashed_password) VALUES ($1, $2)`, 
         [email, hashedPassword])
         
-        const token = jwt.sign({ email}, 'secret', {expiresIn: '1hr'})
+        const token = jwt.sign({email}, 'secret', {expiresIn: '1hr'})
 
         res.json({email, token})
     } catch (err) {
