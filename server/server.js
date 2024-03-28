@@ -87,8 +87,19 @@ app.post('/signup', async (req, res) => {
 app.post('/login', async (req, res) => {
     const { email, password } = req.body
     try {
-        const user = await pool.query('SELECT * FROM users WHERE email = $1 AND password = $2', [email, password])
-        res.json(user.rows)
+        const user = await pool.query('SELECT * FROM users WHERE email = $1, [email]')
+
+        if(!user.rows.length) return res.json({detail: 'User not found'})
+
+        const success = await bcrypt.compare(password, user.rows[0].hashed_password)
+        const token = jwt.sign({email}, 'secret', {expiresIn: '1hr'})
+
+        if (success) {
+            res.json({'email' : users.rows[0].email, token})
+        } else {
+            res.json({detail: 'Login failed'})
+        }
+
     } catch (err) {
         console.log(err)
     }
